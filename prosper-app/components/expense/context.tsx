@@ -9,7 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { mockExpenses } from "@/data/test/mockexpense";
+import { api } from "@/convex/_generated/api";
+import { useMutation, useQuery } from "convex/react";
 import { Calendar, DollarSign, Plus, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import {
@@ -26,7 +27,9 @@ import {
 
 export function Content() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [expenses, setExpenses] = useState(mockExpenses);
+  // const [expenses, setExpenses] = useState(mockExpenses);
+  const expenses = useQuery(api.expenses.list) || [];
+  const addExpense = useMutation(api.expenses.add);
 
   // Calculate stats
   const totalSpent = expenses.reduce((sum, expense) => sum + expense.amount, 0);
@@ -85,12 +88,13 @@ export function Content() {
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const handleAddExpense = (newExpense: any) => {
-    const expense = {
-      _id: Date.now().toString(),
-      ...newExpense,
-      createdAt: Date.now(),
-    };
-    setExpenses((prev) => [expense, ...prev]);
+    addExpense({
+      amount: newExpense.amount,
+      category: newExpense.category,
+      date: newExpense.date,
+      place: newExpense.place,
+      // DO NOT include createdAt or any other fields not in the validator
+    });
     setIsDialogOpen(false);
   };
 
