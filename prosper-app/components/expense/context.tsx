@@ -93,7 +93,6 @@ export function Content() {
       category: newExpense.category,
       date: newExpense.date,
       place: newExpense.place,
-      // DO NOT include createdAt or any other fields not in the validator
     });
     setIsDialogOpen(false);
   };
