@@ -1,2 +1,2 @@
 # prosper
-app to see active spending habits
+app to see spending to help learn convex db
