@@ -17,6 +17,7 @@ import type * as auth from "../auth.js";
 import type * as expenses from "../expenses.js";
 import type * as http from "../http.js";
 import type * as myFunctions from "../myFunctions.js";
+import type * as plaid from "../plaid.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   expenses: typeof expenses;
   http: typeof http;
   myFunctions: typeof myFunctions;
+  plaid: typeof plaid;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
